@@ -36,6 +36,8 @@ public class HuobiProMainServiceImpl   implements HuobiProMainService {
             return;
         }
         channelCache = channelList;
+
+
         // 订阅kline
         firstSub(channelList, Topic.KLINE_SUB);
     }
@@ -52,8 +54,11 @@ public class HuobiProMainServiceImpl   implements HuobiProMainService {
         //启动连接火币网websocket
         klineClient.start();
         for (String channel : channelList) {
+            log.info("channel="+channel);
             //订阅具体交易对
-            klineClient.addSub(formatChannel(topicFormat, channel));
+            for(int i=0;i<Topic.PERIOD.length;i++){
+                klineClient.addSub(formatChannel(topicFormat, channel,i));
+            }
         }
     }
 
@@ -65,6 +70,7 @@ public class HuobiProMainServiceImpl   implements HuobiProMainService {
         // 拉取最新的订阅交易对
         List<String> channelList = huoBiProWebSocketService.getChannelCache();
         if (CollectionUtils.isEmpty(channelList)) {
+            log.error("CollectionUtils.isEmpty(");
             return;
         }
         reSub(channelList, Topic.KLINE_SUB);
@@ -74,7 +80,10 @@ public class HuobiProMainServiceImpl   implements HuobiProMainService {
         for (String sub : channelList) {
             //如果不存在说明该交易所新增加了交易对 需要订阅该交易对
             if (!channelCache.contains(sub)) {
-                klineClient.addSub(formatChannel(topicFormat, sub));
+                for(int i=0;i<Topic.PERIOD.length;i++) {
+                    klineClient.addSub(formatChannel(topicFormat, sub,i));
+                    log.info(topicFormat);
+                }
             }
         }
         channelCache = channelList;
@@ -84,9 +93,10 @@ public class HuobiProMainServiceImpl   implements HuobiProMainService {
     /**
      * 拼接订阅主题
      */
-    private String formatChannel(String topic, String channel) {
+    private String formatChannel(String topic, String channel,int Inx) {
         if (topic.equalsIgnoreCase(Topic.KLINE_SUB)) {
-            return String.format(topic, channel, Topic.PERIOD[0]);
+//            return String.format(topic, channel, Topic.PERIOD[0]);
+            return String.format(topic, channel, Topic.PERIOD[Inx]);
         }
         return String.format(topic, channel);
     }

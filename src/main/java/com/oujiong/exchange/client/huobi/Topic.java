@@ -32,5 +32,5 @@ public final class Topic {
     /**
      * K线交易周期
      */
-    public static String[] PERIOD = {"1min" /*, "5min", "15min", "30min", "60min", "1day", "1mon", "1week", "1year"*/ };
+    public static String[] PERIOD = {"1min" , "5min", "15min", "30min", "60min", "1day", "1mon", "1week"/*, "1year"*/ };
 }

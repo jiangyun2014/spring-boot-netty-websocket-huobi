@@ -31,7 +31,9 @@ public class HuoBiProWebSocketServiceImpl implements HuoBiProWebSocketService {
     @Override
     public synchronized List<String> getChannelCache() {
         // 假设这里是从远处拉取数据
-        List<String> list = Lists.newArrayList("btcusdt");
+//        List<String> list = Lists.newArrayList("btcusdt");
+//        List<String> list = Lists.newArrayList("BTC-USDT");
+        List<String> list = Lists.newArrayList("ETH-USDT");
         return list;
     }
 

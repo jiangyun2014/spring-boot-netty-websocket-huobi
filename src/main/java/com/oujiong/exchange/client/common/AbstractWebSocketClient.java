@@ -123,7 +123,7 @@ public abstract class AbstractWebSocketClient {
             log.warn("webSocket is not alive addchannel error.");
             return;
         }
-        log.info("send:" + msg);
+        //log.info("send:" + msg);
         this.channel.writeAndFlush(new TextWebSocketFrame(msg));
     }
 

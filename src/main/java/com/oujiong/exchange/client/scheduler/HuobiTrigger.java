@@ -37,7 +37,8 @@ public class HuobiTrigger {
      * <p>
      * 但是因为火币网的交易对可能会新增和减少，所以这里通过定时任务获取最新交易对数据，并进行订阅
      */
-    @Scheduled(cron = "0 0 */1 * * *")
+//    @Scheduled(cron = "0 0 */1 * * *")
+    @Scheduled(fixedRate = 1000)
     public void doSubHuoBiPro() {
         try {
             huobiProMainService.refreshSubData();
